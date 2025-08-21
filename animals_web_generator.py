@@ -26,14 +26,17 @@ def get_data():
         location = ", ".join(animal.get("locations")) #join location list to string with commas
 
         # if variable not empty print
+        output += "<li class=\"cards__item\">\n"
         if name:
-            output += f"<p>Name: {name}<br>\n"
+            output += f"Name: {name}</br>\n"
         if diet:
-            output += f"Diet: {diet}<br>\n"
+            output += f"Diet: {diet}</br>\n"
         if animal_type:
-            output += f"Type: {animal_type}<br>\n"
+            output += f"Type: {animal_type}</br>\n"
         if location:
-            output += f"Location: {location}<br></p>\n\n"
+            output += f"Location: {location}</br>\n"
+        output += "</li>\n\n" # end of list
+
     return output
 
 
