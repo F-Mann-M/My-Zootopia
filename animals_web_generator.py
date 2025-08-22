@@ -37,13 +37,16 @@ def serialize_animal(animal_dict):
     """Gets an dictionaries in a dictionary and returns it as html list"""
     output = ""
     for animal, data in animal_dict.items():
-        output += "\t<li class=\"cards__item\">\n"
+        output += "<li class=\"cards__item\">\n"
         output += (f"\t<div class=\"card__title\">{animal}</div>\n"
-                   f"\t<p class=\"card__text\">")
+                   f"\t<p class=\"card__text\">\n"
+                   f"\t\t<ul>\n")
+
         for info, detail in data.items():
             if detail is not None:
-                output += f"\t\t<strong>{info}</strong>: {detail}</br>\n"
-        output += ("\t</p>\n"
+                output += (f"\t\t\t<li><strong>{info}</strong>: {detail}</li>\n")
+        output += ("\t\t</ul>\n"
+                   "\t</p>\n"
                    "</li>\n")
     return output
 
@@ -72,4 +75,3 @@ def write_html(old_string):
 
 # call function an (over)write html
 write_html("__REPLACE_ANIMALS_INFO__")
-print(serialize_animal(get_data()))
