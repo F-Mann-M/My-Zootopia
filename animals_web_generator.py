@@ -28,19 +28,25 @@ def get_data():
         # if variable not empty print
         output += "<li class=\"cards__item\">\n"
         if name:
-            output += f"Name: {name}</br>\n"
+            output += (f"<div class=\"card__title\">{name}</div>\n<p class=\"card__text\">")
         if diet:
-            output += f"Diet: {diet}</br>\n"
-        if animal_type:
-            output += f"Type: {animal_type}</br>\n"
+            output += f"<strong>Diet</strong>: {diet}</br>\n"
         if location:
-            output += f"Location: {location}</br>\n"
-        output += "</li>\n\n" # end of list
+            output += f"<strong>Location:</strong> {location}</br>\n"
+        if animal_type:
+            output += f"<strong>Type:</strong> {animal_type}</br>\n"
+        output += "</p></li>\n\n" # end of list
 
     return output
 
 
 def replace_string(old_string):
+    """
+    Loads an HTML page, gets data from json, replaces a specific string (old_string)
+    with the data from json (new_string) and returns a new HTML.
+    :param old_string:
+    :return new_html:
+    """
     new_string = get_data()
     html_temp = load_html("animals_template.html")
     new_html = html_temp.replace(old_string, new_string)
@@ -48,6 +54,10 @@ def replace_string(old_string):
 
 
 def write_html(old_string):
+    """
+    Gets HTML code and writes it to a html file
+    :param old_string:
+    """
     new_html = replace_string(old_string)
     with open("animals.html", "w") as file:
         file.write(new_html)
