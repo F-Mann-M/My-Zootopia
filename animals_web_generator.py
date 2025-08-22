@@ -16,21 +16,20 @@ def get_data():
     """
     animals_data_dict = {}
     animals_data = load_data('animals_data.json')
-    for animal in animals_data:
 
+    for animal in animals_data:
         # get data from dictionary
         name = animal.get("name")
+        sci_name = animal.get("taxonomy", {}).get("scientific_name") # Bonus Task 1
         diet = animal.get("characteristics", {}).get("diet")
         animal_type = animal.get("characteristics", {}).get("type")
         location = ", ".join(animal.get("locations")) #join location list to a string
 
         animals_data_dict.setdefault(name, {})
-        if diet:
-            animals_data_dict[name].setdefault("Diet", diet)
-        if location:
-            animals_data_dict[name].setdefault("Location", location)
-        if animal_type:
-            animals_data_dict[name].setdefault("Type", animal_type)
+        animals_data_dict[name].setdefault("Scientific Name", sci_name) # Bonus Task 1
+        animals_data_dict[name].setdefault("Diet", diet)
+        animals_data_dict[name].setdefault("Location", location)
+        animals_data_dict[name].setdefault("Type", animal_type)
     return animals_data_dict
 
 
@@ -38,11 +37,14 @@ def serialize_animal(animal_dict):
     """Gets an dictionaries in a dictionary and returns it as html list"""
     output = ""
     for animal, data in animal_dict.items():
-        output += "<li class=\"cards__item\">\n"
-        output += f"<div class=\"card__title\">{animal}</div>\n<p class=\"card__text\">"
+        output += "\t<li class=\"cards__item\">\n"
+        output += (f"\t<div class=\"card__title\">{animal}</div>\n"
+                   f"\t<p class=\"card__text\">")
         for info, detail in data.items():
-            output += f"<strong>{info}</strong>: {detail}</br>\n"
-        output += "</p></li>\n\n"
+            if detail is not None:
+                output += f"\t\t<strong>{info}</strong>: {detail}</br>\n"
+        output += ("\t</p>\n"
+                   "</li>\n")
     return output
 
 
